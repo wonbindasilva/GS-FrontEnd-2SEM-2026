@@ -81,13 +81,13 @@ CREATE TABLE tb_produtos (
     CONSTRAINT tb_produtos_pk PRIMARY KEY (produto_id),
 
     CONSTRAINT tb_produtos_quantidade_ck
-    CHECK (quantidade >= 0),
+    CHECK (quantidade >= 1),
 
     CONSTRAINT tb_produtos_unidade_ck
     CHECK (unidade IN ('KG', 'G', 'ML', 'L')),
 
     CONSTRAINT tb_produtos_tipo_ck
-    CHECK (unidade IN ('UN', 'CAIXA')),
+    CHECK (tipo_produto IN ('UN', 'CAIXA')),
 
     CONSTRAINT tb_produtos_validade_ck
     CHECK (validade >= data_compra),
@@ -114,10 +114,15 @@ CREATE TABLE tb_convites (
     despensa_id      INTEGER       NOT NULL,
     usuario_id       INTEGER       NOT NULL,
 
-    CONSTRAINT tb_convites_token_un   UNIQUE (token),
+    CONSTRAINT tb_convites_pk PRIMARY KEY (convite_id),
+
+    CONSTRAINT tb_convites_token_un UNIQUE (token),
 
     CONSTRAINT tb_convites_status_ck
     CHECK (status_convite IN ('PENDENTE', 'ACEITO', 'RECUSADO', 'EXPIRADO', 'CANCELADO')),
+
+    CONSTRAINT tb_convites_datas_ck
+    CHECK (data_expiracao > data_criacao),
 
     CONSTRAINT tb_convites_despensa_fk
     FOREIGN KEY (despensa_id)
@@ -127,15 +132,6 @@ CREATE TABLE tb_convites (
     FOREIGN KEY (usuario_id)
     REFERENCES tb_usuarios (usuario_id)
 );
-
-INSERT INTO tb_categorias (nome, perecivel) VALUES ('Carnes', 1);
-INSERT INTO tb_categorias (nome, perecivel) VALUES ('Laticínios', 1);
-INSERT INTO tb_categorias (nome, perecivel) VALUES ('Frutas', 1);
-INSERT INTO tb_categorias (nome, perecivel) VALUES ('Verduras e legumes', 1);
-INSERT INTO tb_categorias (nome, perecivel) VALUES ('Grãos', 0);
-INSERT INTO tb_categorias (nome, perecivel) VALUES ('Condimentos', 0);
-INSERT INTO tb_categorias (nome, perecivel) VALUES ('Bebidas', 0);
-INSERT INTO tb_categorias (nome, perecivel) VALUES ('Outros', 1);
 
 COMMIT;
 

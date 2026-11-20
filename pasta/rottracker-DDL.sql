@@ -71,7 +71,7 @@ CREATE TABLE tb_produtos (
     descricao     VARCHAR2(100)  NOT NULL,
     quantidade    NUMERIC(10,2)  NOT NULL,
     unidade       VARCHAR2(5)    NOT NULL,
-    tipo_produto  VARCHAR(10)    NULL,
+    tipo_produto  VARCHAR(10)    NOT NULL,
     data_compra   DATE           NOT NULL,
     validade      DATE           NOT NULL,
     congelado     NUMBER(1)      NOT NULL,
